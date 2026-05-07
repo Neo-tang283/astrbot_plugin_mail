@@ -1,6 +1,7 @@
-name: "astrbot_plugin_file"
-desc: "一个简单的文件发送、上传、删除和查看文件夹内容插件"
-help: "指令：/发送 /查看 /删除 ..."
-version: "v1.2.0"
-author: "Chris"
-repo: "https://github.com/Chris95743/astrbot_plugin_file"
+name: astrbot_plugin_mail
+display_name: 邮件处理插件
+desc: 监控处理发送 IMAP/SMTP 邮箱
+version: v1.0.0
+author: neo（在gangcaiyoule基础上修改）
+astrbot_version: ">=4.10.4"
+repo: "https://github.com/Neo-tang283/astrbot_plugin_mail"
