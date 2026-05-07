@@ -1,0 +1,213 @@
+{
+  "mail_accounts": {
+    "type": "template_list",
+    "description": "邮箱账户列表",
+    "hint": "配置需要监控的邮箱账户及其规则",
+    "templates": {
+      "default_account": {
+        "name": "邮箱账户",
+        "hint": "一个独立的邮箱监控配置",
+        "items": {
+          "name": {
+            "type": "string",
+            "description": "账户名称",
+            "hint": "用于标识此邮箱账户的名称",
+            "default": "我的邮箱"
+          },
+          "email": {
+            "type": "string",
+            "description": "邮箱地址",
+            "hint": "需要监控的邮箱地址",
+            "default": ""
+          },
+          "sender_name": {
+            "type": "string",
+            "description": "发件人名称",
+            "hint": "用于发送邮件时显示的发件人姓名",
+            "default": "AstrBot"
+          },
+          "imap_server": {
+            "type": "string",
+            "description": "IMAP服务器",
+            "hint": "邮箱的IMAP服务器地址，例如: outlook.office365.com",
+            "default": ""
+          },
+          "imap_port": {
+            "type": "int",
+            "description": "IMAP端口",
+            "hint": "IMAP服务器端口号",
+            "default": 993
+          },
+          "username": {
+            "type": "string",
+            "description": "用户名",
+            "hint": "登录邮箱的用户名，通常与邮箱地址相同",
+            "default": ""
+          },
+          "password": {
+            "type": "string",
+            "description": "密码",
+            "hint": "登录邮箱的密码或应用专用密码",
+            "default": ""
+          },
+          "smtp_server": {
+            "type": "string",
+            "description": "SMTP服务器",
+            "hint": "发送邮件的SMTP服务器地址，例如: smtp.qq.com",
+            "default": ""
+          },
+          "smtp_port": {
+            "type": "int",
+            "description": "SMTP端口",
+            "hint": "SMTP服务器端口号，SSL常用465",
+            "default": 465
+          },
+          "smtp_password": {
+            "type": "string",
+            "description": "SMTP密码",
+            "hint": "SMTP专用密码，留空则复用上方密码",
+            "default": ""
+          },
+          "smtp_use_ssl": {
+            "type": "bool",
+            "description": "SMTP使用SSL",
+            "hint": "SMTP连接是否使用SSL加密",
+            "default": true
+          },
+          "folder": {
+            "type": "string",
+            "description": "监控文件夹",
+            "hint": "需要监控的邮箱文件夹名称",
+            "default": "INBOX"
+          },
+          "forward_to_user": {
+            "type": "bool",
+            "description": "转发给用户",
+            "hint": "是否将收到的新邮件转发给用户",
+            "default": true
+          },
+          "ai_mode": {
+            "type": "bool",
+            "description": "AI模式",
+            "hint": "是否启用AI处理邮件",
+            "default": false
+          },
+          "custom_prompt": {
+            "type": "text",
+            "description": "自定义Prompt",
+            "hint": "发送给AI的自定义指令",
+            "default": "你收到了一封新邮件，请阅读后决定是否回复或执行其他操作。"
+          },
+          "llm_persona": {
+            "_special": "select_persona",
+            "description": "AI人格",
+            "hint": "为AI选择一个人格配置",
+            "default": ""
+          },
+          "notify_umo": {
+            "type": "string",
+            "description": "通知目标会话 ID",
+            "hint": "AI处理结果和邮件转发的目标会话ID，例如 'QQGroup:123456' 或 'QQUser:789012'",
+            "default": ""
+          }
+        }
+      }
+    }
+  },
+  "default_smtp_account": {
+    "description": "默认发送邮箱账户",
+    "type": "string",
+    "default": "",
+    "hint": "填写要作为默认发送邮箱的账户备注名或邮箱地址，留空时使用第一个配置的账户"
+  },
+  "check_interval": {
+    "description": "检查间隔（分钟）",
+    "type": "int",
+    "default": 5,
+    "hint": "每隔多少分钟检查一次新邮件，建议不低于 2 分钟"
+  },
+  "admin_uids": {
+    "description": "管理员 UID 列表",
+    "type": "list",
+    "default": [],
+    "hint": "只有列表中的用户可以使用插件命令"
+  },
+  "ai_summary": {
+    "description": "启用 AI 摘要",
+    "type": "bool",
+    "default": false,
+    "hint": "启用后将先生成简短摘要，再发送邮件通知"
+  },
+  "blacklist_settings": {
+    "description": "黑名单设置",
+    "type": "object",
+    "items": {
+      "enable": {
+        "description": "启用黑名单过滤",
+        "type": "bool",
+        "default": false,
+        "hint": "开启后，命中发件人、主题或正文任意黑名单规则的邮件不会推送"
+      },
+      "sender_rules": {
+        "description": "发件人规则",
+        "type": "list",
+        "default": [],
+        "hint": "支持完整邮箱、@域名后缀，或普通关键词包含匹配"
+      },
+      "subject_rules": {
+        "description": "主题规则",
+        "type": "list",
+        "default": [],
+        "hint": "使用不区分大小写的包含匹配"
+      },
+      "body_rules": {
+        "description": "正文规则",
+        "type": "list",
+        "default": [],
+        "hint": "使用不区分大小写的包含匹配"
+      }
+    }
+  },
+  "whitelist_settings": {
+    "description": "白名单设置",
+    "type": "object",
+    "items": {
+      "enable": {
+        "description": "启用白名单过滤",
+        "type": "bool",
+        "default": false,
+        "hint": "开启后，只有命中至少一条白名单规则的邮件才会推送"
+      },
+      "sender_rules": {
+        "description": "发件人规则",
+        "type": "list",
+        "default": [],
+        "hint": "支持完整邮箱、@域名后缀，或普通关键词包含匹配"
+      },
+      "subject_rules": {
+        "description": "主题规则",
+        "type": "list",
+        "default": [],
+        "hint": "使用不区分大小写的包含匹配"
+      },
+      "body_rules": {
+        "description": "正文规则",
+        "type": "list",
+        "default": [],
+        "hint": "使用不区分大小写的包含匹配"
+      }
+    }
+  },
+  "max_body_length": {
+    "description": "通知预览最大长度",
+    "type": "int",
+    "default": 500,
+    "hint": "通知中展示的正文字符上限，也会用于 AI 摘要输入"
+  },
+  "filter_body_length": {
+    "description": "正文过滤最大长度",
+    "type": "int",
+    "default": 3000,
+    "hint": "用于正文黑白名单匹配的最大字符数"
+  }
+}
