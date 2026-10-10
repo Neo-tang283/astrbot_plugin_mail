@@ -202,6 +202,15 @@ class MailNotifyPlugin(Star):
                         ai_reply = llm_resp.completion_text
                         logger.info(f"AI 处理完成: {ai_reply}")
 
+                        # 将 AI 的处理结果同步回通知会话，便于即时查看处理结论
+                        if ai_reply and ai_reply.strip():
+                            await self.context.send_message(
+                                notify_umo,
+                                MessageChain().message(
+                                    f"🤖 AI 处理邮件结果：\n{ai_reply}"
+                                ),
+                            )
+
                     except Exception as e:
                         logger.error(f"AI Agent 处理失败: {e}", exc_info=True)
 
